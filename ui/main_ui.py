@@ -96,6 +96,7 @@ class Main (wx.Frame):
         pub.subscribe(self.pub_open_csv, open_menu )     
         pub.subscribe(self.pub_save_csv, save_menu )  
         pub.subscribe(self.pub_setting, setting_menu )
+        pub.subscribe(self.pub_manual, manual_menu )
           
         pub.subscribe(self.pub_run_continue, run_continue)
         pub.subscribe(self.pub_run_stopfail, run_stopfail)
@@ -252,7 +253,12 @@ class Main (wx.Frame):
 
         modualspec = importlib.util.spec_from_file_location("func", self.project_path +'\\func\\path_manager.py' )                
         self.func = importlib.util.module_from_spec(modualspec)               
-        modualspec.loader.exec_module(self.func)       
+        modualspec.loader.exec_module(self.func)   
+        
+
+        modualspec = importlib.util.spec_from_file_location("func", self.project_path +'\\func\\manual_tool.py' )                
+        self.manual = importlib.util.module_from_spec(modualspec)               
+        modualspec.loader.exec_module(self.manual) 
 
     def pub_open_csv(self, file_path):
         print("[INFO] Open" + file_path)
@@ -270,6 +276,10 @@ class Main (wx.Frame):
     def pub_setting(self, run):
         self.setting_build = setting_panel(self)
         self.setting_build.Show()
+        
+    def pub_manual(self, run):
+        self.manual_build = self.manual.manual_tool(self)
+        self.manual_build.Show()
       
     def pub_run_continue(self, run):
         print("[INFO] Run test")

@@ -26,7 +26,7 @@ class setting_panel(wx.Frame):
     def __init__(self, parent): 
         wx.Frame.__init__(self, None, -1, "MDI Child", size = (600,400)) 
         super().__init__(parent, -1, "Setting Panel", wx.DefaultPosition, wx.DefaultSize) 
-        self.SetBackgroundColour( wx.Colour( 252, 252, 252 ) )
+        self.SetBackgroundColour( wx.Colour( 255, 255, 255 ) )
         self.OnInit()
 
     def OnInit(self):

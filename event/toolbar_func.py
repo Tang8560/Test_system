@@ -34,6 +34,7 @@ project_menu = "project_menu"
 open_menu    = "open_menu"
 save_menu    = "save_menu"
 setting_menu = "setting_menu"
+manual_menu  = "manual_menu"
 run_continue = "run_continue"
 run_stopfail = "run_stopfail"
 run_abort    = "run_abort"
@@ -94,6 +95,7 @@ class toolbar_event(object):
             self.traceback(e)
 
     def setting_event(self, event):
+        print("[INFO] Open the setting panel")
         pub.sendMessage(setting_menu, run = event)
 
     def run_continue_event(self, event):
@@ -107,7 +109,8 @@ class toolbar_event(object):
         pub.sendMessage(run_abort, run = event)
       
     def manual_tool_event(self, event):
-        print("[INFO] Open the manual tool") 
+        print("[INFO] Open the manual tool")
+        pub.sendMessage(manual_menu, run = event)
 
     def about_event(self, event):
         print("[INFO] Open the about tool") 

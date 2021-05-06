@@ -33,6 +33,7 @@ project_menu = "project_menu"
 open_menu    = "open_menu"
 save_menu    = "save_menu"
 setting_menu = "setting_menu"
+manual_menu  = "manual_menu"
 run_continue = "run_continue"
 run_stopfail = "run_stopfail"
 run_abort    = "run_abort"
@@ -44,6 +45,7 @@ project_menu    = "project_menu"
 open_menu       = "open_menu"
 save_menu       = "save_menu"
 setting_menu    = "setting_menu"
+manual_menu     = "manual_menu"
 check_ui        = "check_ui"
 run_continue    = "run_continue"
 run_stopfail    = "run_stopfail"
@@ -57,7 +59,7 @@ upload_file     = "upload_file"
 subbar_range    = "subtask_processbar_range"
 subbar_value    = "subtask_processbar"
 
-unsub = [ project_menu, open_menu, save_menu, setting_menu, check_ui, run_continue, run_stopfail,run_abort,
+unsub = [ project_menu, open_menu, save_menu, setting_menu, manual_menu, check_ui, run_continue, run_stopfail,run_abort,
          pass_fail, test_end, generate_csv, generate_txt, generate_serial, upload_file, subbar_range, subbar_value 
          ]
 
@@ -140,6 +142,7 @@ class menu_event(object):
         
     def manual_tool_event(self, event):
         print("[INFO] Open the manual tool") 
+        pub.sendMessage(manual_menu, run = event)
 
     def about_event(self, event):
         about = about_panel(self.parent,"About")
