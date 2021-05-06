@@ -24,6 +24,7 @@ import sys
 import threading
 from pubsub                   import pub  
 from func.task_dialog         import dialog_thread 
+from func.instrument_manager  import get_instr
 from func.path_manager        import get_icon, get_task_image       
 
 #==========================================================================
@@ -35,6 +36,7 @@ class initial(object):
     def __init__(self, thread_event):
         try:
             self.thread_event = thread_event
+            self.instr = get_instr()
             self.Build()
             self.OnInit()
                 
@@ -52,6 +54,20 @@ class initial(object):
         self.init_btn       = zip([""],["Next"])   
                 
     def OnInit(self):
+        close_RL = False
+        self.DAQ_transecR =  self.instr.DAQ_transecR(close_RL)
+        self.DAQ_transecG =  self.instr.DAQ_transecG(close_RL)
+        self.DAQ_netR     =  self.instr.DAQ_netR(close_RL)
+        self.DAQ_netG     =  self.instr.DAQ_netG(close_RL)
+        self.DAQ_statusR  =  self.instr.DAQ_statusR(close_RL)
+        self.DAQ_statusG  =  self.instr.DAQ_statusG(close_RL)   
+        self.DAQ_TXR      =  self.instr.DAQ_TXR(close_RL)        
+        self.DAQ_TXG      =  self.instr.DAQ_TXG(close_RL)  
+        self.DAQ_RXR      =  self.instr.DAQ_RXR(close_RL)        
+        self.DAQ_RXG      =  self.instr.DAQ_RXG(close_RL)    
+        self.DAQ_PWRR     =  self.instr.DAQ_PWRR(close_RL)
+        self.DAQ_PWRG     =  self.instr.DAQ_PWRG(close_RL) 
+
         ico = wx.Icon(self.task_ico_fullpath, wx.BITMAP_TYPE_ICO)   
         dialog_thread(None, "Initial Check", self.init_toggle, self.init_btn, self.init_fullpath, ico, self.thread_event)
         

@@ -1,0 +1,41 @@
+[START_LOG]
+
+SerialNumber:       Serial Number
+Station:            Kymeta_Reset_Test-01
+Step:               Kymeta_Reset_Test
+Start Time:         2021-05-06 10:48:23
+EndTime:            2021-05-06 10:49:49
+Result:             P
+ErrorCode:          Serial Number
+UserName:           Username
+WO:                 NA
+Model:              83000360000
+Model Rev:          A
+FailItemNumber:     0
+TestTime:           81.66716659999999
+Test Type:          NormalPrd
+Test SoftwareRev:   01.00
+Test DataSheetRev:  NA
+Test Environment:   Room
+==========================================================================
+[START_TEST_LIST]
+Index	Test_Name	L_LMT	H_LMT	Test_Value	Test_Result	Unit	
+0	Normally open SW	1	9.00E+307	2	pass	ohm	
+1	Depressed SW	0	10	2	pass	ohm	
+2	TRANSEC_R	FAIL	PASS	PASS	pass	nan	
+3	TRANSEC_G	FAIL	PASS	PASS	pass	nan	
+4	NET_R	FAIL	PASS	PASS	pass	nan	
+5	NET_G	FAIL	PASS	PASS	pass	nan	
+6	STATUS_R	FAIL	PASS	PASS	pass	nan	
+7	STATUS_G	FAIL	PASS	PASS	pass	nan	
+8	TX_R	FAIL	PASS	PASS	pass	nan	
+9	TX_G	FAIL	PASS	PASS	pass	nan	
+10	RX_R	FAIL	PASS	PASS	pass	nan	
+11	RX_G	FAIL	PASS	PASS	pass	nan	
+12	PWR_R	FAIL	PASS	PASS	pass	nan	
+13	PWR_G	FAIL	PASS	PASS	pass	nan	
+14	Total Result	FAIL	PASS	PASS	pass	nan	
+==========================================================================
+[END_TEST_LIST]
+==========================================================================
+[END_LOG]

@@ -49,6 +49,7 @@ class T2_LED(object):
         
         try:
             self.thread_event = thread_event
+            self.instr = get_instr()
             self.Build()
             self.OnInit()
             
@@ -59,7 +60,7 @@ class T2_LED(object):
                  
     def Build(self):
         
-        self.task_ico_fullpath      = "\\".join(os.path.abspath(__file__).split('\\')[:-2]) + get_icon.task_icon(get_icon)
+        self.task_ico_fullpath    = "\\".join(os.path.abspath(__file__).split('\\')[:-2]) + get_icon.task_icon(get_icon)
         self.TRANSEC_R_fullpath   = "\\".join(os.path.abspath(__file__).split('\\')[:-2]) + get_task_image.TRANSEC_R(get_task_image)
         self.TRANSEC_G_fullpath   = "\\".join(os.path.abspath(__file__).split('\\')[:-2]) + get_task_image.TRANSEC_G(get_task_image)
         self.NET_R_fullpath       = "\\".join(os.path.abspath(__file__).split('\\')[:-2]) + get_task_image.NET_R(get_task_image)
@@ -102,10 +103,7 @@ class T2_LED(object):
         self.PWR_R_btn      = zip([""],["Next"])    
         self.PWR_G_toggle   = zip(["LED6 GREEN"],["PASS"])
         self.PWR_G_btn      = zip([""],["Next"])            
-
-        self.instr = get_instr()
-                   
-        
+                           
     def OnInit(self):
         self.ico = wx.Icon(self.task_ico_fullpath, wx.BITMAP_TYPE_ICO)
         
