@@ -1,0 +1,16 @@
+Test_NO,Test_Name,H_LMT,L_LMT,Test_Value,Test_Result,Unit,Class,Compare,Code,Script,Function
+1-001,Normally open SW,9.00E+307,1,unknow,unknow,ohm,Switch,GELE,ER001,T1_switch,open_switch
+1-002,Depressed SW,10,0,unknow,unknow,ohm,Switch,GELE,ER002,T1_switch,depress_switch
+2-001,TRANSEC_R,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER003,T2_LED,check_TRANSEC_R
+2-002,TRANSEC_G,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER004,T2_LED,check_TRANSEC_G
+2-003,NET_R,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER005,T2_LED,check_NET_R
+2-004,NET_G,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER006,T2_LED,check_NET_G
+2-005,STATUS_R,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER007,T2_LED,check_STATUS_R
+2-006,STATUS_G,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER008,T2_LED,check_STATUS_G
+2-007,TX_R,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER009,T2_LED,check_TX_R
+2-008,TX_G,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER010,T2_LED,check_TX_G
+2-009,RX_R,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER011,T2_LED,check_RX_R
+2-010,RX_G,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER012,T2_LED,check_RX_G
+2-011,PWR_R,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER013,T2_LED,check_PWR_R
+2-012,PWR_G,PASS,FAIL,unknow,unknow,NA,LED,EQS,ER014,T2_LED,check_PWR_G
+0-000,Total Result,PASS,FAIL,unknow,unknow,NA,Total,EQS,ER000,TE_result,

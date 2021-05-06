@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="HatBoy" />
+
+
+
+<meta name="description" content="Python importlib讲解">
+<meta name="keywords" content="Python,Python模块tips">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python importlib讲解">
+<meta property="og:url" content="https://hatboy.github.io/2017/12/21/Python-importlib讲解/index.html">
+<meta property="og:site_name" content="HatBoy的个人主页">
+<meta property="og:description" content="Python importlib讲解">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-19T06:43:19.882Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python importlib讲解">
+<meta name="twitter:description" content="Python importlib讲解">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="HatBoy的个人主页" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Python importlib讲解 | HatBoy的个人主页</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?94c5bc16a94e5db3e2942494f0be64dd";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">HatBoy</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签&amp;分类</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hatboy-dj@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/HatBoy/" title="GitHub"></a>
+                            
+                                <a class="fa 码云博客" href="http://hatboy.gitee.io/" title="码云博客"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/dj1174232716" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cython/">Cython</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HID攻击/">HID攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KCP/">KCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python-tips/">Python tips</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python模块tips/">Python模块tips</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python语法/">Python语法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL注入/">SQL注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Teensy/">Teensy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web安全/">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/asyncio/">asyncio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socks/">socks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内网渗透/">内网渗透</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步并发/">异步并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/硬件安全/">硬件安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/端口转发/">端口转发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/调试/">调试</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://fmxfmx.gitee.io/">FMX</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://jewelz.me/">Jewelz</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.zhihu.com/people/talentisan/activities">轻狂书生</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://threetop.top/">ZCC</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.csdn.net/u012017783">ZCC的CSDN</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://zcc888.gitee.io/">ZCC的博客</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一枚爱Python,爱海贼,爱健身,喜欢好玩有趣事物的程序员……</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">HatBoy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">HatBoy</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签&amp;分类</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hatboy-dj@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/HatBoy/" title="GitHub"></a>
+                            
+                                <a class="fa 码云博客" target="_blank" href="http://hatboy.gitee.io/" title="码云博客"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/dj1174232716" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Python-importlib讲解" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/21/Python-importlib讲解/" class="article-date">
+      <time datetime="2017-12-21T10:19:49.000Z" itemprop="datePublished">2017-12-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python importlib讲解
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Python编程/">Python编程</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python模块tips/">Python模块tips</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<p>Python importlib讲解</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<p>Python标准库中提供了importlib模块，目的是提供import语句（还有<strong>import</strong>()）的底层实现，另外，importlib让程序员可以在导入过程中创建自己的对象。之前的imp模块在Python3.4中被importlib取代了。<br>importlib模块非常复杂，下面只讲解其中的一部分内容。</p>
+<h2 id="动态导入"><a href="#动态导入" class="headerlink" title="动态导入"></a>动态导入</h2><p>importlib支持通过字符串动态导入模块，如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">imoprt importlib</div><div class="line"></div><div class="line"><span class="comment">#导入foo.py模块</span></div><div class="line">foo = importlib.import_module(<span class="string">'foo'</span>)</div><div class="line">foo.main()</div></pre></td></tr></table></figure></p>
+<h2 id="模块导入检查"><a href="#模块导入检查" class="headerlink" title="模块导入检查"></a>模块导入检查</h2><p>导入模块当模块不存在时会抛出ImportError异常，如果我们想在导入模块之前检查该模块是否可以被导入，可以使用importlib模块进行检查，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> importlib.util</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_module</span><span class="params">(module_name)</span>:</span></div><div class="line">    <span class="string">"""检查模块时候能被导入而不用实际的导入模块"""</span></div><div class="line">    module_spec = importlib.util.find_spec(module_name)</div><div class="line">    <span class="keyword">if</span> module_spec <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        print(<span class="string">'Module: &#123;&#125; not found'</span>.format(module_name))</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">'Module: &#123;&#125; can be imported!'</span>.format(module_name))</div><div class="line">        <span class="keyword">return</span> module_spec</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">import_module_from_spec</span><span class="params">(module_spec)</span>:</span></div><div class="line">    <span class="string">"""通过传入模块的spec返回新的被导入的模块对象"""</span></div><div class="line">    module = importlib.util.module_from_spec(module_spec)</div><div class="line">    module_spec.loader.exec_module(module)</div><div class="line">    <span class="keyword">return</span> module</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    module_spec = check_module(<span class="string">'fake_module'</span>)</div><div class="line">    module_spec = check_module(<span class="string">'collections'</span>)</div><div class="line">    <span class="keyword">if</span> module_spec:</div><div class="line">        module = import_module_from_spec(module_spec)</div><div class="line">        print(dir(module))</div></pre></td></tr></table></figure></p>
+<h2 id="从源文件中导入"><a href="#从源文件中导入" class="headerlink" title="从源文件中导入"></a>从源文件中导入</h2><p>importlib.util工具还有一个功能，可以在仅仅知道模块名字和路径的情况下通过该工具导入，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> importlib.util</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">import_source</span><span class="params">(module_name)</span>:</span></div><div class="line">    module_file_path = module_name.__file__</div><div class="line">    module_name = module_name.__name__</div><div class="line"></div><div class="line">    module_spec = importlib.util.spec_from_file_location(module_name, module_file_path)</div><div class="line">    module = importlib.util.module_from_spec(module_spec)</div><div class="line">    module_spec.loader.exec_module(module)</div><div class="line">    print(dir(module))</div><div class="line"></div><div class="line">    msg = <span class="string">'The &#123;module_name&#125; module has the following methods: &#123;methods&#125;'</span></div><div class="line">    print(msg.format(module_name=module_name, methods=dir(module)))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">import</span> os</div><div class="line">    import_source(os)</div></pre></td></tr></table></figure></p>
+<h2 id="import-from-github-com"><a href="#import-from-github-com" class="headerlink" title="import_from_github_com"></a>import_from_github_com</h2><p>有一个优雅的模块import_from_github_com可以从github中寻找并加载模块，该模块使用了PEP 302中提供的import hook来实现功能。该模块并没有使用importlib模块，而是使用pip安装模块，如果pip没有安装则使用Python的<strong>import</strong>()函数实际导入新的安装模块。</p>
+<p> <strong>参考：《Python 201》第五章</strong></p>
+</the></excerpt>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/12/21/Python-importlib讲解/">Python importlib讲解</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">HatBoy</a></p>
+        <p><span>发布时间:</span>2017-12-21, 18:19:49</p>
+        <p><span>最后更新:</span>2018-08-19, 14:43:19</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/21/Python-importlib讲解/" title="Python importlib讲解">https://hatboy.github.io/2017/12/21/Python-importlib讲解/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hatboy.github.io/2017/12/21/Python-importlib讲解/　　作者: HatBoy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/12/21/Python上下文管理器/">
+                    Python上下文管理器
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/12/21/第七章-用Cython包装C库/">
+                    第七章 用Cython包装C库
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#动态导入"><span class="toc-number">1.</span> <span class="toc-text">动态导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块导入检查"><span class="toc-number">2.</span> <span class="toc-text">模块导入检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从源文件中导入"><span class="toc-number">3.</span> <span class="toc-text">从源文件中导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import-from-github-com"><span class="toc-number">4.</span> <span class="toc-text">import_from_github_com</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Python importlib讲解　| HatBoy的个人主页　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = 'https://hatboy.github.io/2017/12/21/Python-importlib讲解/';
+            this.page.identifier = '2017/12/21/Python-importlib讲解/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//hatboy007.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/12/21/Python上下文管理器/" title="上一篇: Python上下文管理器">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/12/21/第七章-用Cython包装C库/" title="下一篇: 第七章 用Cython包装C库">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/02/16/Python异步编程详解/">Python异步编程详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/22/Golang中的指针、结构体、方法、方法集和接口/">Golang中的指针、结构体、方法、方法集和接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/11/Python-KCP协议实例/">Python KCP协议实例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/14/Teensy之生成Payload/">Teensy之生成Payload</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/14/Teensy之简单代码编写/">Teensy之简单代码编写</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/14/Teensy之开发环境部署及基本用法/">Teensy之开发环境部署及基本用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/28/MySQL报错注入/">MySQL报错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/28/内网端口转发及穿透/">内网端口转发及穿透</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/Python编写socks5服务器/">Python编写socks5服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/Python沙箱逃逸总结/">Python沙箱逃逸总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/如何恢复丢失的Python源代码如果它还在内存中运行/">如何恢复丢失的Python源代码如果它还在内存中运行</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/pathlib：文件系统路径作为对象/">pathlib：文件系统路径作为对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio：异步IO、事件循环和并发/">asyncio：异步IO、事件循环和并发</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之调试asyncio/">asyncio之调试asyncio</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之协程结合线程和进程/">asyncio之协程结合线程和进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之接收Unix信号/">asyncio之接收Unix信号</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之使用子进程/">asyncio之使用子进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之与DNS服务进行交互/">asyncio之与DNS服务进行交互</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之使用SSL/">asyncio之使用SSL</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之使用协程和流的异步I-O/">asyncio之使用协程和流的异步I/O</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之协议抽象类的异步I-O/">asyncio之协议抽象类的异步I/O</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之同步原语/">asyncio之同步原语</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之用控制结构组建协程/">asyncio之用控制结构组建协程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之并发执行Tasks/">asyncio之并发执行Tasks</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之异步生产结果/">asyncio之异步生产结果</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之定时调度常规函数/">asyncio之定时调度常规函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之使用协程处理多任务/">asyncio之使用协程处理多任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/asyncio之异步并发的概念/">asyncio之异步并发的概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/Python上下文管理器/">Python上下文管理器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/Python-importlib讲解/">Python importlib讲解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/第七章-用Cython包装C库/">第七章 用Cython包装C库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/16/第六章-组织Cython代码/">第六章 组织Cython代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/第五章-Cython和扩展类型/">第五章 Cython和扩展类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/第四章-Cython实践：N-body模拟/">第四章 Cython实践：N-body模拟</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/Python性能分析与调试/">Python性能分析与调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/第三章-深入Cython/">第三章 深入Cython</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/03/第二章-编译和运行Cython代码/">第二章 编译和运行Cython代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/第一章-Cython简介/">第一章 Cython简介</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 HatBoy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        $("a").attr("target", "_blank");
+        $("#scroll a, #toc a").removeAttr("target");
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

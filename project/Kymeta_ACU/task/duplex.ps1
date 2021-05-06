@@ -1,0 +1,1 @@
+Get-NetAdapter -Name "¤A¤Óºô¸ô"| SELECT name, LinkSpeed, fullduplex | ft -autosize

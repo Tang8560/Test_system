@@ -1,0 +1,8 @@
+{
+    "Other": {
+        "Save_Report": "False",
+        "Save_Log": "True",
+        "Save_Serial": "True",
+        "Upload_Report": "True"
+    }
+}

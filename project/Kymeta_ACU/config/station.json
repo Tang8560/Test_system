@@ -1,0 +1,10 @@
+{
+    "Station": {
+        "Station": "Kymeta_ACU_Test-01",
+        "Step": "Kymeta_ACU_Test",
+        "FTP_Server": "172.16.10.11",
+        "FTP_UserName": "uadc",
+        "FTP_Password": "uadc",
+        "FTP_Upload": "ATS/Kymeta_ACU_Test_UADC/"
+    }
+}

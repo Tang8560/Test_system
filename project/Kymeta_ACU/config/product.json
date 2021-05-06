@@ -1,0 +1,14 @@
+{
+    "Product": {
+        "Username": "kymeta",
+        "Part_number": "83000316000",
+        "Rev": "B",
+        "Product_IP": "192.168.0.10",
+        "Host_IP": "192.168.0.30",
+        "NetCard_name": "乙太網路",
+        "Version_URL": "https://192.168.0.10/v1/version",
+        "FVT_URL": "https://192.168.0.10/v1/mast/fvt",
+        "RF_URL": "https://192.168.0.10/v1/internal/adc-samples",
+        "Server_Path": "//172.16.129.11/ops_data/U8_ACU"
+    }
+}

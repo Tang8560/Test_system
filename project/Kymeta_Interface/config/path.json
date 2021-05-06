@@ -1,0 +1,9 @@
+{
+    "Path": {
+        "Save_Report_Path": "C:\\Users\\6065\\Desktop\\ATS_temp\\v5_thread\\data",
+        "Save_Product_Path": "C:\\Users\\6065\\Desktop\\ATS_temp\\v5_thread\\data",
+        "Save_Log_Path": "C:\\Users\\6065\\Desktop\\ATS_temp\\v5_thread\\data",
+        "Save_Serial_Log_Path": "C:\\Users\\6065\\Desktop\\ATS_temp\\v5_thread\\data",
+        "Save_Temp_File": "C:\\Users\\6065\\Desktop\\ATS_temp\\v5_thread\\data\\temp"
+    }
+}

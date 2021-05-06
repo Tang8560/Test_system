@@ -1,0 +1,16 @@
+{
+    "Instrument": {
+        "Relay_TRANSEC_R": "Dev4/port0/line0",
+        "Relay_TRANSEC_G": "Dev4/port0/line1",
+        "Relay_NET_R"    : "Dev4/port0/line2",
+        "Relay_NET_G"    : "Dev4/port0/line3",
+        "Relay_STATUS_R" : "Dev4/port0/line4",
+        "Relay_STATUS_G" : "Dev4/port0/line5",
+        "Relay_TX_R"     : "Dev4/port0/line6",
+        "Relay_TX_G"     : "Dev4/port0/line7",
+        "Relay_RX_R"     : "Dev4/port1/line0",
+        "Relay_RX_G"     : "Dev4/port1/line1",
+        "Relay_PWR_R"    : "Dev4/port1/line2",
+        "Relay_PWR_G"    : "Dev4/port1/line3"
+    }
+}

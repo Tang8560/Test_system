@@ -1,0 +1,6 @@
+Test_NO,Test_Name,H_LMT,L_LMT,Test_Value,Test_Result,Unit,Class,Compare,Code,Script,Function,Parameter
+1-001,Verify D7 is WHITE,PASS,FAIL,unknow,unknow,NA,LED,EQS,E1001,,,
+1-002,Verify D8 is WHITE,PASS,FAIL,unknow,unknow,NA,LED,EQS,E1002,,,
+1-003,AIN0 Voltage,5.5,4.5,unknow,unknow,V,Voltage,EQS,E1003,,,
+1-004,AIN1 Voltage,5.5,4.5,unknow,unknow,V,Voltage,EQS,E1004,,,
+0-000,Total Result,PASS,FAIL,unknow,unknow,NA,Total,EQS,E0000,,,

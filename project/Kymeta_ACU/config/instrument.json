@@ -1,0 +1,10 @@
+{
+    "Instrument": {
+        "Power_Supply_ACU": "GPIB0::5::INSTR",
+        "Power_Supply_BUC": "GPIB0::5::INSTR",
+        "Spectrum_Analyzer": "TCPIP0::192.168.0.100::inst0::INSTR",
+        "Relay_ACC": "Dev2/port0/line0",
+        "Relay_LED": "Dev2/port0/line1",
+        "EMMC_COM": "COM5"
+    }
+}
