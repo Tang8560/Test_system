@@ -1,0 +1,25 @@
+DTG,20210509135824
+Serial Number,Serial Number
+Part Number,83000360000
+Rev,A
+SW Rev,01.00
+Test Operator,Username
+Test Result,FAIL
+""
+[Test Log]
+Index,Test_Name,L_LMT,H_LMT,Test_Value,Test_Result,Unit
+0,Normally open SW,1,9.00E+307,,fail,ohm
+1,Depressed SW,0,10,,fail,ohm
+2,TRANSEC_R,FAIL,PASS,PASS,pass,nan
+3,TRANSEC_G,FAIL,PASS,,fail,nan
+4,NET_R,FAIL,PASS,,fail,nan
+5,NET_G,FAIL,PASS,PASS,pass,nan
+6,STATUS_R,FAIL,PASS,PASS,pass,nan
+7,STATUS_G,FAIL,PASS,PASS,pass,nan
+8,TX_R,FAIL,PASS,PASS,pass,nan
+9,TX_G,FAIL,PASS,PASS,pass,nan
+10,RX_R,FAIL,PASS,PASS,pass,nan
+11,RX_G,FAIL,PASS,PASS,pass,nan
+12,PWR_R,FAIL,PASS,PASS,pass,nan
+13,PWR_G,FAIL,PASS,PASS,pass,nan
+14,Total Result,FAIL,PASS,PASS,pass,nan
