@@ -74,7 +74,7 @@ The test process will fetch `script`, `function` and `parameter` to execute
 | 1-002 | test name | PASS | FAIL | unknow | unknow | NA | test class | EQS | E1002 | `script` | `function` | 
 | 1-003 | test name | PASS | FAIL | unknow | unknow | NA | test class | EQS | E1003 | `script` | `function` |
 
-<a href="{source/video.mp4}" title="Link Title">
+![Alt Text](source/video.gif)
 
 
 
