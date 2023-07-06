@@ -1,22 +1,22 @@
 import wx
 import wx.html2
-from urllib.parse import urlparse   
+from urllib.parse import urlparse
 
 class Browser(wx.Frame):
-    
+
     def __init__(self, parent=None, id=-1, title='Simple browser'):
         super(Browser, self).__init__(parent=parent, id=id, title=title)
         self.InitUI()
         self.Maximize()
-    
+
     def alert_error(self, message):
         wx.MessageBox(message, "Error", wx.OK | wx.ICON_ERROR)
-    
+
     def InitUI(self):
         self.InitStatusBar()
         self.InitMenuBar()
         self.InitMainView()
-    
+
     def InitMainView(self):
         self.browser = wx.html2.WebView.New(self)
         self.browser.LoadURL("about:blank")
@@ -27,13 +27,13 @@ class Browser(wx.Frame):
         vertical_box.Add((-1, 10))
         vertical_box.Add(self.browser, 1, flag=wx.EXPAND)
         self.SetSizerAndFit(vertical_box)
-    
+
     def OnNewURL(self, event):
         new_url = urlparse(self.url_text.GetValue())
         request_path = new_url.geturl()
         if new_url.scheme != "http":
             request_path = "http://" + request_path
-            
+
         self.browser.LoadURL(request_path)
         self.url_text.SetValue(request_path)
 
@@ -45,7 +45,7 @@ class Browser(wx.Frame):
         self.SetMenuBar(menu_bar)
         # Bind quit to actually quit the app:
         self.Bind(wx.EVT_MENU, self.OnQuit, quit_item)
-      
+
         view_menu = wx.Menu()
         self.toggle_status_bar = view_menu.Append(-1, 'Show status bar', 'Toggle show status bar', kind=wx.ITEM_CHECK)
         menu_bar.Append(view_menu, "&View")
@@ -67,7 +67,7 @@ class Browser(wx.Frame):
     def OnAbout(self, event):
         about_dialog = wx.MessageDialog(None, message="About window", style=wx.OK)
         dialog_button = about_dialog.ShowModal()
-    
+
     def InitStatusBar(self):
        self.status_bar = self.CreateStatusBar()
 

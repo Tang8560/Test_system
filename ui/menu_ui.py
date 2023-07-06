@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #==========================================================================
 # Project : Test System
-# File    : menu_ui.py 
+# File    : menu_ui.py
 #--------------------------------------------------------------------------
-# Create menubar 
+# Create menubar
 #--------------------------------------------------------------------------
 # Redistribution and use of this file in source and binary forms, with
 # or without modification, are permitted.
@@ -33,8 +33,8 @@ height = 15
 #==========================================================================
 # MAIN PROGRAM
 #==========================================================================
-class menu_panel( object ):     
-    def __init__( self, parent, src_path ):  
+class menu_panel( object ):
+    def __init__( self, parent, src_path ):
         """Create Menu"""
         self.parent = parent
         self.src_path = src_path
@@ -49,15 +49,15 @@ class menu_panel( object ):
         self.tool_menu()
         self.help_menu()
         self.parent.SetMenuBar( self.parent.menubar )
-        
+
         self.event_handle()
-        
+
     def path_trans(self, path):
         """Change source file path into the same type"""
         new_path = self.src_path + "\\" + path
         new_path = new_path.replace("/","\\")
         return new_path
-    
+
     def menu_build(self):
         """Create Menubar Item"""
         self.file = wx.Menu()
@@ -65,7 +65,7 @@ class menu_panel( object ):
         self.run  = wx.Menu()
         self.tool = wx.Menu()
         self.help = wx.Menu()
-           
+
     def menu_icon(self):
         """Get Icon"""
         self.project_image = wx.Image(self.path_trans('product.png')).Rescale(width, height)
@@ -77,7 +77,7 @@ class menu_panel( object ):
         self.stop_image    = wx.Image(self.path_trans('stop.png')).Rescale(width, height)
         self.abort_image   = wx.Image(self.path_trans('abort.png')).Rescale(width, height)
         self.manual_image  = wx.Image(self.path_trans('manual.png')).Rescale(width, height)
-        
+
     def menu_item(self):
         """
         Create Item
@@ -93,57 +93,57 @@ class menu_panel( object ):
         self.run_continue = wx.MenuItem( self.run, 301, "&Run\tF5"      , kind = wx.ITEM_NORMAL )
         self.run_stopfail = wx.MenuItem( self.run, 302, "&Run fail-stop\tF6", kind = wx.ITEM_NORMAL )
         self.run_abort    = wx.MenuItem( self.run, 303, "&Abort\tCtrl+C", kind = wx.ITEM_NORMAL )
-        self.manual_tool  = wx.MenuItem( self.tool, 401, "&Manual"      , kind = wx.ITEM_NORMAL ) 
-        self.about        = wx.MenuItem( self.help, 501, "&About\tF1"   , kind = wx.ITEM_NORMAL ) 
-        
+        self.manual_tool  = wx.MenuItem( self.tool, 401, "&Manual"      , kind = wx.ITEM_NORMAL )
+        self.about        = wx.MenuItem( self.help, 501, "&About\tF1"   , kind = wx.ITEM_NORMAL )
+
     def menu_item_icon(self):
         """Add Icon to Menu Item"""
         self.project.SetBitmap(wx.Bitmap(self.project_image))
-        self.open.SetBitmap(wx.Bitmap(self.open_image)) 
-        self.save.SetBitmap(wx.Bitmap(self.save_image)) 
-        self.quit.SetBitmap(wx.Bitmap(self.quit_image)) 
-        self.setting.SetBitmap(wx.Bitmap(self.setting_image)) 
+        self.open.SetBitmap(wx.Bitmap(self.open_image))
+        self.save.SetBitmap(wx.Bitmap(self.save_image))
+        self.quit.SetBitmap(wx.Bitmap(self.quit_image))
+        self.setting.SetBitmap(wx.Bitmap(self.setting_image))
         self.run_continue.SetBitmap(wx.Bitmap(self.run_image))
         self.run_stopfail.SetBitmap(wx.Bitmap(self.stop_image))
         self.run_abort.SetBitmap(wx.Bitmap(self.abort_image))
         self.manual_tool.SetBitmap(wx.Bitmap(self.manual_image))
-        self.about.SetBitmap(wx.ArtProvider.GetBitmap(wx.ART_HELP, wx.ART_MENU,(width,height))) 
-        
-    def file_menu(self):  
-        """File Menu Layout""" 
-        self.file.Append( self.project ) 
-        self.file.AppendSeparator()        
-        self.file.Append( self.open )         
+        self.about.SetBitmap(wx.ArtProvider.GetBitmap(wx.ART_HELP, wx.ART_MENU,(width,height)))
+
+    def file_menu(self):
+        """File Menu Layout"""
+        self.file.Append( self.project )
+        self.file.AppendSeparator()
+        self.file.Append( self.open )
         self.file.Append( self.save )
-        self.file.Append( self.quit )        
-        self.parent.menubar.Append( self.file, u" File " ) 
-        
-    def edit_menu(self):  
+        self.file.Append( self.quit )
+        self.parent.menubar.Append( self.file, u" File " )
+
+    def edit_menu(self):
         """Edit Menu Layout"""
         self.edit.Append( self.flow )
         self.edit.Append( self.setting )
-        self.parent.menubar.Append( self.edit, u" Edit " )     
-        
-    def run_menu(self):  
+        self.parent.menubar.Append( self.edit, u" Edit " )
+
+    def run_menu(self):
         """Run Menu Layout"""
         self.run.Append( self.run_continue )
         self.run.Append( self.run_stopfail )
         self.run.Append( self.run_abort )
-        self.parent.menubar.Append( self.run, u" Run " ) 
-        
-    def tool_menu(self):  
+        self.parent.menubar.Append( self.run, u" Run " )
+
+    def tool_menu(self):
         """Tool Menu Layout"""
         self.tool.Append( self.manual_tool )
-        self.parent.menubar.Append( self.tool, u" Tool " ) 
-        
-    def help_menu(self):  
+        self.parent.menubar.Append( self.tool, u" Tool " )
+
+    def help_menu(self):
         """Help Menu Layout"""
         self.help.Append( self.about )
         self.parent.menubar.Append( self.help, u" Help " )
-        
-    def event_handle(self): 
+
+    def event_handle(self):
         """Add Event to Menu Item"""
-        evt = menu_event(self.parent)               
+        evt = menu_event(self.parent)
         self.parent.Bind(wx.EVT_MENU, evt.project_event, id = 100)
         self.parent.Bind(wx.EVT_MENU, evt.open_event, id = 101)
         self.parent.Bind(wx.EVT_MENU, evt.save_event, id = 102)

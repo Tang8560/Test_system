@@ -3,7 +3,7 @@
 # Copyright © MTI, Inc.
 #--------------------------------------------------------------------------
 # Project : Test System
-# File    : info_ui.py 
+# File    : info_ui.py
 #--------------------------------------------------------------------------
 # Build info
 #--------------------------------------------------------------------------
@@ -32,12 +32,12 @@ class Item(object):
         """ List attribution """
         self.item = item
         self.info = info
-        
+
 info_columns = [ "item", "info" ]
-        
+
 info_items = [
-              Item("Project", ""), 
-              Item("Serial number", ""), 
+              Item("Project", ""),
+              Item("Serial number", ""),
               Item("User Name", ""),
               Item("Model", ""),
               Item("Model Rev", ""),
@@ -61,16 +61,16 @@ class info_panel(wx.Panel):
         self.info_olv.useAlternateBackColors = False
 
         self.setitem()
-    
+
         # Allow the cell values to be edited when single-clicked
         self.info_olv.cellEditMode = ObjectListView.CELLEDIT_SINGLECLICK
-              
+
         info_sizer.Add(self.info_olv, 1, wx.EXPAND)
         self.SetSizer(info_sizer)
         self.Layout()
         info_sizer.Fit( self)
-        
-        self.Bind(wx.EVT_SIZE, self.onResize) 
+
+        self.Bind(wx.EVT_SIZE, self.onResize)
 
     def setitem(self):
         """ Bind the item to the objectlistview """
@@ -80,12 +80,12 @@ class info_panel(wx.Panel):
                             ColumnDefn(info_columns[1], "left", ss[1]*0.8, info_columns[1])
                         ])
         self.info_olv.SetObjects(self.info_items)
-    
+
     def onResize(self, event):
         self.setitem()
         self.Layout()
         self.Refresh()
-        
+
 
 class MainFrame(wx.Frame):
     def __init__(self):

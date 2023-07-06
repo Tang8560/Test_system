@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #==========================================================================
 # Project : Test System
-# File    : generate_browser_panel.py 
+# File    : generate_browser_panel.py
 #--------------------------------------------------------------------------
 # Create Browser Tool
 #--------------------------------------------------------------------------
@@ -11,15 +11,15 @@
 
 import wx
 import wx.html2
-from urllib.parse import urlparse   
+from urllib.parse import urlparse
 
 #==========================================================================
 # TEXTCTRL EVENT
 #==========================================================================
 class Placeholder(wx.TextCtrl):
-    
+
     def __init__(self, *args, **kwargs):
-        """ 
+        """
         Build the TextCtrl
         ----------------------
         When the mouse click on the TextCtrl, then the text will be cleared.
@@ -42,10 +42,10 @@ class Placeholder(wx.TextCtrl):
             self.SetForegroundColour(wx.LIGHT_GREY)
         if event:
             event.Skip()
-            
+
 #==========================================================================
 # MAIN PROGRAM
-#==========================================================================            
+#==========================================================================
 class Browser(wx.Panel):
   def __init__(self, parent, id=-1, title='browser'):
     super().__init__(parent, id)
@@ -82,7 +82,7 @@ class Browser(wx.Panel):
 
 # 1. Change "class Browser(wx.Panel)"  into "class Browser(wx.Frame)"
 # 2. Execute the following code ( just delete the symbol comment )
-    
+
 # if __name__ == '__main__':
 #   app = wx.App()
 #   web = Browser(None,-1,title="Browser Tool")

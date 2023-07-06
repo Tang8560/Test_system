@@ -3,7 +3,7 @@
 # Copyright © MTI, Inc.
 #--------------------------------------------------------------------------
 # Project : Test System
-# File    : generate_report_txt.py 
+# File    : generate_report_txt.py
 #--------------------------------------------------------------------------
 # Generate TXT Report.
 #--------------------------------------------------------------------------
@@ -11,8 +11,8 @@
 # or without modification, are permitted.
 #==========================================================================
 
-""" 
-生成MES的上傳形式 
+"""
+生成MES的上傳形式
 -----------------------------------------
 SerialNumber      產品序號
 Station           測試站名
@@ -28,7 +28,7 @@ UserName          操作人員
 WO                None
 Model             產品型號
 Model Rev         產品版本
-FailItemNumber  
+FailItemNumber
 TestTime          測試時間
 Test Type         測試模式
 Test SoftwareRev  軟體版本
@@ -60,7 +60,7 @@ save_report_path   = root + r"\data"
 
 
 class txt_report(object):
-    
+
     def __init__(self,serial,station,step, start,start_all,end_all,testtime, result,error,operator,wo, model,modelrev,failitemnum,testtype,softrev,datasheetrev,env,label,data):
 
         self.serial       = str(serial)
@@ -84,48 +84,48 @@ class txt_report(object):
         self.env          = str(env)
         self.label        = label
         self.data         = data
-        
-        self.save_report        = save_report 
-        self.save_report_path   = save_report_path  
-        
+
+        self.save_report        = save_report
+        self.save_report_path   = save_report_path
+
         if self.save_report == True:
-            
+
             self.filepath = self.save_report_path+'\\'+ self.result +'_'+ self.serial +'_'+ self.DTG()[0]+'.log'
             print("MES path: ", self.filepath)
             try:
                 with open(self.save_report_path+'\\'+ self.result +'_'+ self.serial +'_'+ self.DTG()[0]+'.log','w', newline='') as txtfile:
-                    
+
                     header = self.header()
                     txtfile.writelines(header)
                     print('[INFO] Successfully generate MES report.')
-                    
+
                 self.file_time = self.DTG()[0]
-                
+
             except Exception as e:
                 print('[INFO] Generate MES report have error happened.', e)
-                
+
         else:
             print("[INFO] Not save MES report. if you want to change, please modify setting panel.")
-              
-            
+
+
     def DTG(self):
         """ 在生成檔案的情況下計算結束時間 """
         end = datetime.now()
         dt_string = end.strftime("%Y%m%d%H%M%S")
         end = end.strftime("%Y-%m-%d %H:%M:%S")
         return dt_string, end
-    
-    
+
+
     def header(self):
-        """ 
-        寫入檔案的資料形式 
+        """
+        寫入檔案的資料形式
         --------------------------------
         下面可以決定資料形式要不要額外加index
         """
         #------------------------------------------------------------------
-        ## [ 資料中加入index ] ##       ## 用來在data前面加上index，若是需要可自行開啟 ##    
+        ## [ 資料中加入index ] ##       ## 用來在data前面加上index，若是需要可自行開啟 ##
                                         ## self.data = [[xxx,xxx],[xxx,xxx],[xxx,xxx]]
-        # mesdata_all =''      
+        # mesdata_all =''
         # itemnum = 0
         # for row in self.data:
         #     row.insert(0,itemnum)
@@ -134,27 +134,27 @@ class txt_report(object):
         #         con = str(col)+'\t'
         #         mesdata_all += con
         #     mesdata_all+='\n'
-        #------------------------------------------------------------------        
-        ## [ 資料中不加入index ] ##        
-        mesdata_all =''      
+        #------------------------------------------------------------------
+        ## [ 資料中不加入index ] ##
+        mesdata_all =''
         for row in self.data:
             for col in row:
                 con = str(col)+'\t'
                 mesdata_all += con
-            mesdata_all+='\n'        
-        #------------------------------------------------------------------  
-        ## [ 處理label ] ##        
-        meslabel_all =''  
+            mesdata_all+='\n'
+        #------------------------------------------------------------------
+        ## [ 處理label ] ##
+        meslabel_all =''
         # self.label --> ['Index', 'Test_Name', 'H_LMT', 'L_LMT', 'Test_Value', 'Test_Result', 'Unit']
         for col in self.label:
             con = str(col)+'\t'
             meslabel_all += con
-        meslabel_all+='\n'  
-            
-            
-        
+        meslabel_all+='\n'
+
+
+
         header = ["[START_LOG]\n\n",
-                  "SerialNumber:       " + self.serial       + "\n",      
+                  "SerialNumber:       " + self.serial       + "\n",
                   "Station:            " + self.station      + "\n",
                   "Step:               " + self.step         + "\n",
                   "Start Time:         " + self.start        + "\n",
@@ -182,12 +182,11 @@ class txt_report(object):
         return header
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+

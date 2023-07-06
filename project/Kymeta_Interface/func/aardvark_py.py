@@ -87,7 +87,7 @@ def import_library ():
         else:
             import imp
             api = imp.load_dynamic('aardvark', lib)
-        
+
 
     except:
         _, err, _ = sys.exc_info()
@@ -98,7 +98,7 @@ try:
     import aardvark as api
 except ImportError:
     import_library()
-    
+
 # print(dir(api))
 #%%
 del import_library
@@ -108,7 +108,7 @@ AA_REQ_API_VERSION = (api.py_version() >> 16) & 0xffff
 AA_LIBRARY_LOADED  = \
     ((AA_SW_VERSION >= AA_REQ_SW_VERSION) and \
      (AA_API_VERSION >= AA_REQ_API_VERSION))
-        
+
 #==========================================================================
 # HELPER FUNCTIONS
 #==========================================================================
@@ -132,7 +132,7 @@ def array_f64 (n):  return array('d', [0]*n)
 # defined as follows:
 # enum AardvarkStatus
 
-# General codes (0 to -99) 
+# General codes (0 to -99)
 AA_OK                        =    0
 AA_UNABLE_TO_LOAD_LIBRARY    =   -1
 AA_UNABLE_TO_LOAD_DRIVER     =   -2

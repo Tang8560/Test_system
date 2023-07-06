@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #==========================================================================
 # Project : Test System
-# File    : menu_ui.py 
+# File    : menu_ui.py
 #--------------------------------------------------------------------------
-# Create menubar 
+# Create menubar
 #--------------------------------------------------------------------------
 # Redistribution and use of this file in source and binary forms, with
 # or without modification, are permitted.
@@ -36,7 +36,7 @@ height = 20
 #==========================================================================
 
 class Placeholder(wx.TextCtrl):
-    
+
     def __init__(self, parent, id, value):
         """ 當滑鼠按在TextCtrl上時將文字清空 """
         super().__init__(parent, id, value)
@@ -59,7 +59,7 @@ class Placeholder(wx.TextCtrl):
             self.SetForegroundColour(wx.LIGHT_GREY)
         if event:
             event.Skip()
-            
+
 #==========================================================================
 # MAIN PROGRAM
 #==========================================================================
@@ -67,22 +67,22 @@ class Placeholder(wx.TextCtrl):
 class toolbar_panel(aui.AuiToolBar):
     def __init__(self, parent, src_path ):
         """ Toolbar panel """
-        super().__init__(parent, -1, wx.DefaultPosition, wx.DefaultSize)   # agwStyle=aui.AUI_TB_TEXT  (show label)          
+        super().__init__(parent, -1, wx.DefaultPosition, wx.DefaultSize)   # agwStyle=aui.AUI_TB_TEXT  (show label)
                                                                            # self.SetToolTextOrientation(1) (label orientation)
         self.parent = parent
         self.src_path = src_path
         self.toolbar_icon()
         self.toolbar_item()
         self.DoGetBestSize()
-        
+
         self.event_handle()
-        
+
     def path_trans(self, path):
         """Change source file path into the same type"""
         new_path = self.src_path + "\\" + path
         new_path = new_path.replace("/","\\")
         return new_path
-              
+
     def toolbar_icon(self):
         """Get Icon"""
         self.project_image = wx.Image(self.path_trans('product.png')).Rescale(width, height)
@@ -92,32 +92,32 @@ class toolbar_panel(aui.AuiToolBar):
         self.run_image     = wx.Image(self.path_trans('run.png')).Rescale(width, height)
         self.abort_image   = wx.Image(self.path_trans('abort.png')).Rescale(width, height)
         self.manual_image  = wx.Image(self.path_trans('manual.png')).Rescale(width, height)
-        self.serialnum = Placeholder(self,-1,"Serial Number") 
-        self.dev = Placeholder(self,-1,"Dev")  
-        self.testtype = wx.ComboBox( self, -1, value = "NormalPrd", choices = ["PreTest","NormalPrd","EngrTrial","Golden","RR","QC"], style = wx.CB_READONLY) 
-        self.temperature = wx.ComboBox( self, -1, value = "Room", choices = ["Low","Room","High","BRoom","Packing"], style = wx.CB_READONLY) 
-        
+        self.serialnum = Placeholder(self,-1,"Serial Number")
+        self.dev = Placeholder(self,-1,"Dev")
+        self.testtype = wx.ComboBox( self, -1, value = "NormalPrd", choices = ["PreTest","NormalPrd","EngrTrial","Golden","RR","QC"], style = wx.CB_READONLY)
+        self.temperature = wx.ComboBox( self, -1, value = "Room", choices = ["Low","Room","High","BRoom","Packing"], style = wx.CB_READONLY)
+
     def toolbar_item(self):
         """ Create Item """
-        
+
         self.AddSimpleTool( 601, u"project", wx.Bitmap(self.project_image, wx.BITMAP_TYPE_ANY) )
         self.AddSimpleTool( 602, u"open", wx.Bitmap(self.open_image, wx.BITMAP_TYPE_ANY) )
         self.AddSimpleTool( 603, u"save", wx.Bitmap(self.save_image, wx.BITMAP_TYPE_ANY) )
         self.AddSimpleTool( 604, u"setting", wx.Bitmap(self.setting_image, wx.BITMAP_TYPE_ANY) )
         self.AddSimpleTool( 605, u"run", wx.Bitmap(self.run_image, wx.BITMAP_TYPE_ANY) )
         self.AddSimpleTool( 606, u"abort", wx.Bitmap(self.abort_image, wx.BITMAP_TYPE_ANY) )
-        self.AddSimpleTool( 607, u"manual", wx.Bitmap(self.manual_image, wx.BITMAP_TYPE_ANY) ) 
+        self.AddSimpleTool( 607, u"manual", wx.Bitmap(self.manual_image, wx.BITMAP_TYPE_ANY) )
         self.AddSeparator()
         self.AddControl(self.serialnum)
         self.AddControl(self.dev)
         self.AddControl(self.testtype)
         self.AddControl(self.temperature)
         self.SetToolBitmapSize(wx.Size(128,128))
-        self.Realize() 
+        self.Realize()
 
-    def event_handle(self): 
+    def event_handle(self):
         """Add Event to "Toolbar" Item"""
-        evt = toolbar_event(self.parent)  
+        evt = toolbar_event(self.parent)
         self.parent.Bind(wx.EVT_TOOL, evt.project_event, id = 601)
         self.parent.Bind(wx.EVT_TOOL, evt.open_event, id = 602)
         self.parent.Bind(wx.EVT_TOOL, evt.save_event, id = 603)
@@ -125,7 +125,7 @@ class toolbar_panel(aui.AuiToolBar):
         self.parent.Bind(wx.EVT_TOOL, evt.run_continue_event, id = 605)
         self.parent.Bind(wx.EVT_TOOL, evt.run_abort_event, id = 606)
         self.parent.Bind(wx.EVT_TOOL, evt.manual_tool_event, id = 607)
-      		
+
 class MainFrame(wx.Frame):
     def __init__(self):
         """Constructor"""

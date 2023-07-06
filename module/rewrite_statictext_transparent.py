@@ -3,7 +3,7 @@
 # Copyright © MTI, Inc.
 #--------------------------------------------------------------------------
 # Project : Test System
-# File    : rewrite_statictext_transparent.py 
+# File    : rewrite_statictext_transparent.py
 #--------------------------------------------------------------------------
 # Inherit wx.Statictext to make the text on the image background will not
 # appear gray zone.
@@ -21,7 +21,7 @@ class transparentText(wx.StaticText):
         self.Bind(wx.EVT_PAINT, self.on_paint)
         self.Bind(wx.EVT_ERASE_BACKGROUND, lambda event: None)
         self.Bind(wx.EVT_SIZE, self.on_size)
-        
+
     def on_paint(self, event): # 重寫 on_paint 可以對物件進行重寫
         bdc = wx.PaintDC(self)
         dc = wx.GCDC(bdc)
@@ -30,7 +30,7 @@ class transparentText(wx.StaticText):
         dc.SetFont(font_face)
         dc.SetTextForeground(font_color)
         dc.DrawText(self.GetLabel(), 0, 0)
-        
+
     def on_size(self, event):
         self.Refresh()
         event.Skip()

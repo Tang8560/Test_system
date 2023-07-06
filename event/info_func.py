@@ -32,36 +32,36 @@ class Item(object):
         self.item = item
         self.info = info
         self.classname = classname
-        
+
 #==========================================================================
 # MAIN PROGRAM
 #==========================================================================
 
 class info_event(object):
-    
+
     def __init__(self, project_path):
 
         self.project_files = os.walk(project_path)
-        self.get_json_data()        
-        
+        self.get_json_data()
+
     def get_json_data(self):
         ## Get all json file ##
         json_data = []
         for file in self.project_files:
-        
+
             json_file = glob.glob(file[0] +'\*.json')
             json_data.extend(json_file)
-        
+
         ## Get all parameter ##
-        self.para = []  
+        self.para = []
         for get_data in json_data:
             data = get_json_data(get_data)
             for i in data:
                 for j in data[i]:
                     self.para.append([j, data[i][j], i])
-                    
-    def get_info_items(self):            
-        ## Transfer to item data format ## 
+
+    def get_info_items(self):
+        ## Transfer to item data format ##
         ## Create a list of objects ##
         """
         format:
@@ -78,10 +78,10 @@ class info_event(object):
 
         return info_items
 
-              
 
 
 
-        
-        
+
+
+
 

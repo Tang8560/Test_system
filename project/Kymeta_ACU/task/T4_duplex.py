@@ -3,7 +3,7 @@
 # Copyright © MTI, Inc.
 #--------------------------------------------------------------------------
 # Project : Kymeta ACU
-# File    : T4_duplex.py 
+# File    : T4_duplex.py
 #--------------------------------------------------------------------------
 # Check the NIC connection status to ensure the speed on 1 Gbps and full-duplex.
 #--------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 # or without modification, are permitted.
 #==========================================================================
 
-""" 
+"""
 psutil可用來查看系統狀態
 ------------------------------------------------------------
 類似於調用 Windows 的powershell的功能，不過這個套件是跨平台的
@@ -48,59 +48,59 @@ network_name = None
 
 ## 回傳網路相關資訊 ##
 class T4_duplex(object):
-    
+
     def __init__(self, thread_event):
         print("T4_duplex")
-        try:        
+        try:
             self.update_info()
             self.network_name = network_name
             if self.network_name == None:
                 self.network_name = self.product_nic
-                
+
             self.OnInit()
         except:
             # (1) duplex
             pub.sendMessage("pass_to_grid",test_value = "Boot Error")
-            
+
     def update_info(self):
-        print("T4_duplex_info")        
+        print("T4_duplex_info")
         product_path = get_path.Product_setting(get_path)
-        get_product = get_json_data("\\".join(os.path.abspath(__file__).split('\\')[:-2]) + product_path) 
-        self.product_nic = get_product["Product"]["NetCard_name"] 
-        
-        
+        get_product = get_json_data("\\".join(os.path.abspath(__file__).split('\\')[:-2]) + product_path)
+        self.product_nic = get_product["Product"]["NetCard_name"]
+
+
     def OnInit(self):
-        
+
         #----------------------------------------------------------------------
         ## [ 1.速度與全半雙工檢查 ] ##
-        
+
         network = self.network_status(self.network_name)
         try:
-            if network.isup:  
+            if network.isup:
                 print("[network isup]", network.duplex )
                 print("[network speed]", network.speed )
-                
-                if str(network.duplex) == "NicDuplex.NIC_DUPLEX_FULL":                  
+
+                if str(network.duplex) == "NicDuplex.NIC_DUPLEX_FULL":
                     if str(network.speed) == "1000":
                         self.check_duplex_speed = "PASS"
                 else:
                     self.check_duplex_speed = "FAIL"
-                    print("[T4-3-02] Check the NIC's 'speed  & duplex' on '1.0 Gbps Full Duplex'.")                          
+                    print("[T4-3-02] Check the NIC's 'speed  & duplex' on '1.0 Gbps Full Duplex'.")
             else:
                 self.check_duplex_speed = "FAIL"
                 print("[T4-3-01] Cannot find the specific NIC or not connect to the end-device.")
-            
+
             pub.sendMessage("pass_to_grid",test_value = self.check_duplex_speed)
             pub.sendMessage("subtask_processbar", value = 5)
-            
+
         except Exception as e:
             print(e)
             pub.sendMessage("pass_to_grid",test_value = "Boot Error")
             assert ConnectionError
-        
-    
+
+
     def network_connect(self):  # (暫未用到)
-        """ 
+        """
         取出目前的連線
         ------------------------------
         kind: 選擇過濾的網路類型
@@ -119,7 +119,7 @@ class T4_duplex(object):
             status: represents the status of a TCP connection.
             pid: the PID of the process which opened the socket, if retrievable, else None.
         """
-        
+
         self.net_connections = psutil.net_connections(kind='inet')
 
     def network_address(self):  # (暫未用到)
@@ -134,7 +134,7 @@ class T4_duplex(object):
         """
         self.net_address = psutil.net_if_addrs()
 
-    
+
     def network_status(self, network_name):
         """
         取出網路卡 NIC (network interface card)相關狀態資訊
@@ -153,10 +153,10 @@ class T4_duplex(object):
         # print(self.net_status[network_name].isup)
         # print(self.net_status[network_name].duplex)
         # print(self.net_status[network_name].speed)
-        
+
         self.network = self.net_status[network_name]
-        
-        return self.network 
+
+        return self.network
 
 # network = system("乙太網路").network
 # print(network)

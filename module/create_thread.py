@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #==========================================================================
 # Project : Test System
-# File    : create_thread.py 
+# File    : create_thread.py
 #--------------------------------------------------------------------------
 # Create menubar event handle
 #--------------------------------------------------------------------------
@@ -28,14 +28,14 @@ def _async_raise(tid, exctype):
     if res == 0:
       raise ValueError("invalid thread id")
     elif res != 1:
-      # """if it returns a number greater than one, you're in trouble, 
+      # """if it returns a number greater than one, you're in trouble,
       # and you should call it again with exc=NULL to revert the effect"""
       ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, 0)
       raise SystemError("PyThreadState_SetAsyncExc failed")
-    
-    
+
+
 class Thread(threading.Thread):
-    
+
     def _get_my_tid(self):
         """determines this (self's) thread id"""
         if not self.isAlive():
@@ -49,13 +49,13 @@ class Thread(threading.Thread):
             self._thread_id = tid
             return tid
         raise AssertionError("could not determine the thread's id")
-    
-    
+
+
     def raise_exc(self, exctype):
         """raises the given exception type in the context of this thread"""
-        _async_raise(self._get_my_tid(), exctype)       
-        
+        _async_raise(self._get_my_tid(), exctype)
+
     def terminate(self):
-        """raises SystemExit in the context of the given thread, which should 
+        """raises SystemExit in the context of the given thread, which should
         cause the thread to exit silently (unless caught)"""
         self.raise_exc(SystemExit)
